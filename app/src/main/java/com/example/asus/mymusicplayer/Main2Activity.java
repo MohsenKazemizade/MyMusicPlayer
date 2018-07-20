@@ -25,12 +25,12 @@ public class Main2Activity extends AppCompatActivity {
                 @Override
                 public void onAudioFocusChange(int focusChange) {
                     if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
-                            focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
-                        mMediaPlayer.pause();
-//                        mMediaPlayer.seekTo(0);
-                    }else if (focusChange == AudioManager.AUDIOFOCUS_GAIN){
+                            focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+//                        mMediaPlayer.pause();
+                        mMediaPlayer.seekTo(0);
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                         mMediaPlayer.start();
-                    }else if (focusChange == AudioManager.AUDIOFOCUS_LOSS){
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                         releaseMediaPlayer();
                     }
                 }
@@ -58,7 +58,7 @@ public class Main2Activity extends AppCompatActivity {
         tracks.add(new Track(R.drawable.ehaam_haleman, R.raw.ehaam_haaleman, "Seyd jegar khaste"));
 
 
-        ListView musicListView = (ListView)findViewById(R.id.musicList);
+        ListView musicListView = (ListView) findViewById(R.id.musicList);
 
         TrackAdapter adapter = new TrackAdapter(this, tracks);
         musicListView.setAdapter(adapter);
@@ -72,7 +72,7 @@ public class Main2Activity extends AppCompatActivity {
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mMediaPlayer = MediaPlayer.create(Main2Activity.this, tracks.get(position).getMusic());
                     mMediaPlayer.start();
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
@@ -83,7 +83,7 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 
-    private void releaseMediaPlayer(){
+    private void releaseMediaPlayer() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
             mMediaPlayer.release();
@@ -93,15 +93,15 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        //releaseMediaPlayer();
-        mMediaPlayer.pause();
+        releaseMediaPlayer();
+//        mMediaPlayer.pause();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (mMediaPlayer != null){
+        if (mMediaPlayer != null) {
             mMediaPlayer.start();
         }
     }
